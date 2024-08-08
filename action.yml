@@ -1,4 +1,4 @@
-name: "Install a binary from GitHub releases"
+name: "Install a binaries from GitHub releases"
 description: "Install binaries from GitHub releases"
 author: "Lee Briggs"
 inputs:

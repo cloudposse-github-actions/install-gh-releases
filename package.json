@@ -1,11 +1,17 @@
 {
-  "name": "action-install-gh-release",
-  "version": "1.10.0",
+  "name": "install-gh-releases",
+  "version": "0.1.0",
   "private": true,
-  "description": "Install a GitHub release binary in a GitHub Actions build environment",
+  "description": "Install a GitHub releases binary in a GitHub Actions build environment",
   "main": "lib/main.js",
   "scripts": {
-    "build": "tsc"
+    "format": "prettier --write **/*.ts",
+    "lint": "eslint --fix src/**/*.ts",
+    "lint:check": "eslint src/**/*.ts",
+    "build": "ncc build src/main.ts --source-map --license licenses.txt",
+    "test": "jest",
+    "format-check": "prettier --check '**/*.ts'",
+    "all": "npm run build && npm run format && npm run lint && npm test"
   },
   "repository": {
     "type": "git",
