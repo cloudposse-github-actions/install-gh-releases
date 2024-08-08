@@ -15,6 +15,7 @@ jobs:
         run: echo "Do setup"
 
   test:
+    needs: [setup]
     strategy:
       matrix:
         version: [ "v0.62.1", "v0.62.0" ]
@@ -50,4 +51,4 @@ jobs:
       - uses: nick-fields/assert-action@v1
         with:
           expected: 'success'
-          actual: ${{ needs.test.outputs.outcome }}
+          actual: ${{ needs.test.result }}
