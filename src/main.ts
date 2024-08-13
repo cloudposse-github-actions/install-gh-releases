@@ -48,7 +48,7 @@ export async function run() {
         const isValid = ajv.validate(schemaJson, configJson);
         if (! isValid) {
             throw new Error(
-                `Config is not a valid YAML string`
+                ajv.errorsText()
             )
         }
 

@@ -129,7 +129,7 @@ wasmerio/wasmer: {}
         // Verify that all of the core library functions were called correctly
         expect(setFailedMock).toHaveBeenNthCalledWith(
             1,
-            'Config is not a valid YAML string'
+            'data must be object'
         )
         expect(errorMock).not.toHaveBeenCalled()
     })
