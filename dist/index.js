@@ -84279,7 +84279,7 @@ function run() {
             // validate input json against schema json
             const isValid = ajv.validate(schemaJson, configJson);
             if (!isValid) {
-                throw new Error(`Config is not a valid YAML string`);
+                throw new Error(ajv.errorsText());
             }
             let binariesLocation = core.getInput("binaries-location");
             const cacheEnabled = (core.getInput("cache") === "enable");
