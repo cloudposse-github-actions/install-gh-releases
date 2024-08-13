@@ -35,12 +35,13 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: prometheus/prometheus
-          tag: 'v2.37.9'
-          platform: linux
-          arch: amd64
+          config: |-
+            prometheus/prometheus:          
+              tag: 'v2.37.9'
+              platform: linux
+              arch: amd64
+              binaries-location: prometheus-2.37.9.linux-amd64
           cache: enable
-          binaries-location: prometheus-2.37.9.linux-amd64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: promtool --version

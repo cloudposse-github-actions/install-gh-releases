@@ -35,9 +35,10 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: wasmerio/wasmer
-          binaries-location: bin
-          chmod: 0755
+          config: |-
+            wasmerio/wasmer:          
+              binaries-location: bin
+              chmod: 0755
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: wasmer --version

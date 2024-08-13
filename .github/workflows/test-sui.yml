@@ -31,8 +31,9 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: MystenLabs/sui
-          platform: ubuntu
+          config: |-
+            MystenLabs/sui:          
+              platform: ubuntu
           cache: enable
       - run: sui --version
 

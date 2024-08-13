@@ -37,11 +37,12 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: mozilla/grcov
-          tag: ${{ matrix.version }}
-          platform: ${{ matrix.platform }}
-          arch: ${{ matrix.arch }}
-          extension: "\\.bz2"
+          config: |-
+            mozilla/grcov: 
+              tag: ${{ matrix.version }}
+              platform: ${{ matrix.platform }}
+              arch: ${{ matrix.arch }}
+              extension: "\\.bz2"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: grcov --version

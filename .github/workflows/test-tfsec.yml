@@ -39,10 +39,11 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: aquasecurity/tfsec
-          tag: ${{ matrix.version }}
-          platform: ${{ matrix.platform }}
-          arch: ${{ matrix.arch }}
+          config: |-
+            aquasecurity/tfsec:        
+              tag: ${{ matrix.version }}
+              platform: ${{ matrix.platform }}
+              arch: ${{ matrix.arch }}
       - run: tfsec --version
 
   assert:

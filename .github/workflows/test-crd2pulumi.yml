@@ -30,8 +30,8 @@ jobs:
       - run: npm run build
       - uses: ./
         with:
-          repo: pulumi/crd2pulumi
-          tag: v1.0.10
+          config: |-
+            pulumi/crd2pulumi: v1.0.10
 
   assert:
     runs-on: ubuntu-latest
