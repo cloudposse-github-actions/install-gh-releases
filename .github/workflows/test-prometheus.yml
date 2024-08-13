@@ -36,7 +36,7 @@ jobs:
       - uses: ./
         with:
           cache: enable
-          config: >-
+          config: |-
             prometheus/prometheus:
               tag: "v2.37.9"
               platform: linux
