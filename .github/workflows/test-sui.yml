@@ -31,7 +31,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             MystenLabs/sui:          
               platform: ubuntu
           cache: enable

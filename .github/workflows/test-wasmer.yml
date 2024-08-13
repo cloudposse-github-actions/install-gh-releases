@@ -35,7 +35,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             wasmerio/wasmer:          
               binaries-location: bin
               chmod: 0755

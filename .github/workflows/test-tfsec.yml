@@ -39,7 +39,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             aquasecurity/tfsec:        
               tag: ${{ matrix.version }}
               platform: ${{ matrix.platform }}

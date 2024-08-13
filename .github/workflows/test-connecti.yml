@@ -30,7 +30,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             jaxxstorm/connecti:
               arch: amd64
           cache: enable

@@ -30,7 +30,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             pulumi/crd2pulumi: v1.0.10
 
   assert:

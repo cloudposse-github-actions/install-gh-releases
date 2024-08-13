@@ -37,7 +37,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             mozilla/grcov: 
               tag: ${{ matrix.version }}
               platform: ${{ matrix.platform }}

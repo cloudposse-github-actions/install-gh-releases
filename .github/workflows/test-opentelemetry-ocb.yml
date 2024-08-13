@@ -37,7 +37,7 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          config: |-
+          config: |
             open-telemetry/opentelemetry-collector: 
               tag: ${{ matrix.version }}
               platform: ${{ matrix.platform }}
