@@ -37,11 +37,11 @@ jobs:
         with:
           cache: enable
           config: |
-            prometheus/prometheus:          
-              tag: 'v2.37.9'
+            prometheus/prometheus
+              tag: "v2.37.9"
               platform: linux
               arch: amd64
-              binaries-location: prometheus-2.37.9.linux-amd64
+              binaries-location: "prometheus-2.37.9.linux-amd64"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: promtool --version
