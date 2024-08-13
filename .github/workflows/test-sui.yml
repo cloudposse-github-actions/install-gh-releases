@@ -27,8 +27,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run build
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
       - uses: ./
         with:
           config: |-
