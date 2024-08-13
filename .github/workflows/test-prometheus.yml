@@ -37,7 +37,7 @@ jobs:
         with:
           cache: enable
           config: |
-            prometheus/prometheus
+            prometheus/prometheus:
               tag: "v2.37.9"
               platform: linux
               arch: amd64
