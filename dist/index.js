@@ -84286,50 +84286,52 @@ function run() {
             let configs = new Map();
             for (let repo in configJson) {
                 let config = configJson[repo];
-                // tag = !tag ? "latest" : tag
-                if (config == null) {
-                    configs[repo] = {
+                if (config === null) {
+                    configs.set(repo, {
                         owner: repo.split('/')[0],
                         project: repo.split('/')[1],
                         tag: "latest",
                         platform: defaultPlatform(),
                         arch: defaultArch(),
+                        arch_list: defaultArchList(),
                         extension: "",
                         extension_matching: false,
                         rename_to: "",
                         chmod: "",
-                    };
+                    });
                 }
-                else if (config.type === 'string') {
-                    configs[repo] = {
+                else if (typeof config === 'string') {
+                    configs.set(repo, {
                         owner: repo.split('/')[0],
                         project: repo.split('/')[1],
                         tag: config === "" ? "latest" : config,
                         platform: defaultPlatform(),
                         arch: defaultArch(),
+                        arch_list: defaultArchList(),
                         extension: "",
                         extension_matching: false,
                         rename_to: "",
                         chmod: "",
-                    };
+                    });
                 }
-                else if (config.type == 'object') {
-                    configs[repo] = {
+                else if (typeof config == 'object') {
+                    configs.set(repo, {
                         owner: repo.split('/')[0],
                         project: repo.split('/')[1],
-                        tag: config.tag === "" ? "latest" : config.tag,
-                        platform: config.platform === "" ? defaultPlatform() : config.platform,
-                        arch: config.arch === "" ? defaultArch() : config.arch,
-                        extension: config.extension,
+                        tag: config.tag === "" || config.tag === undefined ? "latest" : config.tag,
+                        platform: config.platform === "" || config.platform === undefined ? defaultPlatform() : config.platform,
+                        arch: config.arch === "" || config.arch === undefined ? defaultArch() : config.arch,
+                        arch_list: config.arch === "" || config.arch === undefined ? defaultArchList() : [config.arch],
+                        extension: config.extension === undefined ? "" : config.extension,
                         extension_matching: config.extension_matching === "enable" || config.extension_matching === "true",
-                        rename_to: config.rename_to,
-                        chmod: config.chmod,
-                    };
+                        rename_to: config.rename_to === undefined ? "" : config.rename_to,
+                        chmod: config.chmod === undefined ? "" : config.chmod,
+                    });
                 }
             }
             const octokit = (0, github_1.getOctokit)(token);
-            for (let repo in configs) {
-                downloadRelease(octokit, configs[repo], cacheEnabled, binariesLocation);
+            for (let [repo, config] of configs) {
+                yield downloadRelease(octokit, config, cacheEnabled, binariesLocation);
             }
         }
         catch (error) {
@@ -84356,6 +84358,9 @@ function defaultPlatform() {
     }
 }
 function defaultArch() {
+    return os.arch();
+}
+function defaultArchList() {
     switch (os.arch()) {
         case "x64":
             return ["x86_64", "x64", "amd64"];
@@ -84371,13 +84376,13 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
             core.debug(`==> Given bin location: ${binary_location}`);
             finalBinLocation = path.join(dest, binary_location);
         }
-        core.debug(`==> Binaries will be located at: ${finalBinLocation}`);
+        core.info(`==> Binaries will be located at: ${finalBinLocation}`);
         let cacheKey = cachePrimaryKey(config);
         if (cache_enabled && cacheKey !== undefined) {
             let ok = yield cache.restoreCache([dest], cacheKey);
             if (ok !== undefined) {
-                core.debug(`Found ${config.project} in the cache: ${dest}`);
-                core.debug(`Adding ${finalBinLocation} to the path`);
+                core.info(`Found ${config.project} in the cache: ${dest}`);
+                core.info(`Adding ${finalBinLocation} to the path`);
                 core.addPath(finalBinLocation);
                 return false;
             }
@@ -84401,21 +84406,21 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
         if (config.extension_matching) {
             if (config.extension === "") {
                 extMatchRegexForm = "\.(tar.gz|zip|tgz)";
-                core.debug(`==> Using default file extension matching: ${extMatchRegexForm}`);
+                core.info(`==> Using default file extension matching: ${extMatchRegexForm}`);
             }
             else {
                 extMatchRegexForm = config.extension;
-                core.debug(`==> Using custom file extension matching: ${extMatchRegexForm}`);
+                core.info(`==> Using custom file extension matching: ${extMatchRegexForm}`);
             }
         }
         else {
-            core.debug("==> File extension matching disabled");
+            core.info("==> File extension matching disabled");
         }
-        let osMatch = [config.platform].concat(config.arch);
+        let osMatch = [config.platform].concat(config.arch_list);
         let osMatchRegexForm = `(${osMatch.join('|')})`;
         let re = new RegExp(`${osMatchRegexForm}.*${osMatchRegexForm}.*${extMatchRegexForm}`);
         let asset = getReleaseUrl.data.assets.find(obj => {
-            core.debug(`searching for ${obj.name} with ${re.source}`);
+            core.info(`searching for ${obj.name} with ${re.source}`);
             let normalized_obj_name = obj.name.toLowerCase();
             return re.test(normalized_obj_name);
         });
@@ -84424,7 +84429,7 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
             throw new Error(`Could not find a release for ${!config.tag ? "latest" : config.tag}. Found: ${found}`);
         }
         const url = asset.url;
-        core.debug(`Downloading ${config.project} from ${url}`);
+        core.info(`Downloading ${config.project} from ${url}`);
         const binPath = yield tc.downloadTool(url, undefined, `token ${octokit.token}`, {
             accept: 'application/octet-stream'
         });
@@ -84433,13 +84438,13 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
             // Release is an archive file so extract it to the destination
             const extractFlags = getExtractFlags(asset.name);
             if (extractFlags !== undefined) {
-                core.debug(`Attempting to extract archive with custom flags ${extractFlags}`);
+                core.info(`Attempting to extract archive with custom flags ${extractFlags}`);
                 yield extractFn(binPath, dest, extractFlags);
             }
             else {
                 yield extractFn(binPath, dest);
             }
-            core.debug(`Automatically extracted release asset ${asset.name} to ${dest}`);
+            core.info(`Automatically extracted release asset ${asset.name} to ${dest}`);
             const bins = fs.readdirSync(finalBinLocation, { withFileTypes: true })
                 .filter(item => item.isFile())
                 .map(bin => bin.name);
@@ -84454,7 +84459,7 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
                     const binPath = path.join(finalBinLocation, bin);
                     try {
                         fs.chmodSync(binPath, config.chmod);
-                        core.debug(`chmod'd ${binPath} to ${config.chmod}`);
+                        core.info(`chmod'd ${binPath} to ${config.chmod}`);
                     }
                     catch (chmodErr) {
                         core.setFailed(`Failed to chmod ${binPath} to ${config.chmod}: ${chmodErr}`);
@@ -84468,11 +84473,11 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
             // parameter then this is where we apply those.
             // Regardless of any rename-to parameter we still need to move the download to the actual destination
             // otherwise it won't end up on the path as expected
-            core.debug(`Release asset ${asset.name} did not have a recognised file extension, unable to automatically extract it`);
+            core.info(`Release asset ${asset.name} did not have a recognised file extension, unable to automatically extract it`);
             try {
                 fs.mkdirSync(dest, { 'recursive': true });
                 const outputPath = path.join(dest, config.rename_to !== "" ? config.rename_to : path.basename(binPath));
-                core.debug(`Created output directory ${dest}`);
+                core.info(`Created output directory ${dest}`);
                 var moveFailed = false;
                 try {
                     fs.renameSync(binPath, outputPath);
@@ -84495,12 +84500,12 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
                     }
                 }
                 if (!moveFailed) {
-                    core.debug(`Moved release asset ${asset.name} to ${outputPath}`);
+                    core.info(`Moved release asset ${asset.name} to ${outputPath}`);
                 }
                 if ((config.chmod !== "") && !moveFailed) {
                     try {
                         fs.chmodSync(outputPath, config.chmod);
-                        core.debug(`chmod'd ${outputPath} to ${config.chmod}`);
+                        core.info(`chmod'd ${outputPath} to ${config.chmod}`);
                     }
                     catch (chmodErr) {
                         core.setFailed(`Failed to chmod ${outputPath} to ${config.chmod}: ${chmodErr}`);
@@ -84521,17 +84526,17 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
                     throw error;
                 }
                 else if (typedError.name === cache.ReserveCacheError.name) {
-                    core.debug(typedError.message);
+                    core.info(typedError.message);
                 }
                 else {
                     core.warning(typedError.message);
                 }
             }
         }
-        core.debug(`Adding ${finalBinLocation} to the path`);
+        core.info(`Adding ${finalBinLocation} to the path`);
         core.addPath(finalBinLocation);
-        core.debug(`Successfully installed ${config.project}`);
-        core.debug(`Binaries available at ${finalBinLocation}`);
+        core.info(`Successfully installed ${config.project}`);
+        core.info(`Binaries available at ${finalBinLocation}`);
         return true;
     });
 }
