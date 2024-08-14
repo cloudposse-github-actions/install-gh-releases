@@ -84324,7 +84324,7 @@ function run() {
                         arch: config.arch === "" || config.arch === undefined ? defaultArch() : config.arch,
                         arch_list: config.arch === "" || config.arch === undefined ? defaultArchList() : [config.arch],
                         extension: config.extension === undefined ? "" : config.extension,
-                        extension_matching: config.extension_matching === "enable" || config.extension_matching === "true",
+                        extension_matching: config["extension-matching"] === "enable" || config["extension-matching"] === "true",
                         rename_to: config.rename_to === undefined ? "" : config.rename_to,
                         chmod: config.chmod === undefined ? "" : config.chmod,
                         binaries_location: config.binaries_location === undefined ? "" : config.binaries_location,
