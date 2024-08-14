@@ -41,8 +41,8 @@ jobs:
               tag: "v2.37.9"
               platform: linux
               arch: amd64
+              extension-matching: enable
               binaries-location: "prometheus-2.37.9.linux-amd64"
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: promtool --version
