@@ -59,6 +59,7 @@ aquasecurity/tfsec:
   tag: v1.18.0
   platform: linux
   arch: amd64
+  extension-matching: enable
 jaxxstorm/connecti: 
 jaxxstorm/change-aws-credentials: v0.4.0
 wasmerio/wasmer: {}
