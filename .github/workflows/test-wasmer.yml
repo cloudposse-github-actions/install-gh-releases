@@ -38,7 +38,7 @@ jobs:
           config: |
             wasmerio/wasmer:          
               binaries-location: bin
-              chmod: "0755"
+              chmod: 755
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: wasmer --version

@@ -44,7 +44,7 @@ jobs:
               arch: ${{ matrix.arch }}
               extension-matching: disable
               rename-to: ocb
-              chmod: "0755"
+              chmod: 755
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: ocb version
