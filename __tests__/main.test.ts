@@ -133,6 +133,12 @@ wasmerio/wasmer: {}
                         (err) => { if (err) throw err; }
                     );
                     return filepath
+                case 'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961884':
+                    filepath = path.join(tmpdir, 'wasmer-darwin-amd64.tar.gz');
+                    fs.copyFile("__tests__/fixtures/assets/wasmer-darwin-amd64.tar.gz", filepath,
+                        (err) => { if (err) throw err; }
+                    );
+                    return filepath
                 case 'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961899':
                     filepath = path.join(tmpdir, 'wasmer-darwin-amd64.tar.gz');
                     fs.copyFile("__tests__/fixtures/assets/wasmer-darwin-amd64.tar.gz", filepath,
