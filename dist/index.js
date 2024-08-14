@@ -84298,6 +84298,7 @@ function run() {
                         extension_matching: false,
                         rename_to: "",
                         chmod: "",
+                        binaries_location: ""
                     });
                 }
                 else if (typeof config === 'string') {
@@ -84312,6 +84313,7 @@ function run() {
                         extension_matching: false,
                         rename_to: "",
                         chmod: "",
+                        binaries_location: ""
                     });
                 }
                 else if (typeof config == 'object') {
@@ -84326,12 +84328,13 @@ function run() {
                         extension_matching: config.extension_matching === "enable" || config.extension_matching === "true",
                         rename_to: config.rename_to === undefined ? "" : config.rename_to,
                         chmod: config.chmod === undefined ? "" : config.chmod,
+                        binaries_location: config.binaries_location === undefined ? "" : config.binaries_location,
                     });
                 }
             }
             const octokit = (0, github_1.getOctokit)(token);
             for (let [repo, config] of configs) {
-                yield downloadRelease(octokit, token, config, cacheEnabled, binariesLocation);
+                yield downloadRelease(octokit, token, config, cacheEnabled);
             }
         }
         catch (error) {
@@ -84368,13 +84371,13 @@ function defaultArchList() {
             return [os.arch()];
     }
 }
-function downloadRelease(octokit, token, config, cache_enabled, binary_location) {
+function downloadRelease(octokit, token, config, cache_enabled) {
     return __awaiter(this, void 0, void 0, function* () {
         let dest = toolPath(config);
         let finalBinLocation = dest;
-        if (binary_location !== "") {
-            core.debug(`==> Given bin location: ${binary_location}`);
-            finalBinLocation = path.join(dest, binary_location);
+        if (config.binaries_location !== "") {
+            core.debug(`==> Given bin location: ${config.binaries_location}`);
+            finalBinLocation = path.join(dest, config.binaries_location);
         }
         core.info(`==> Binaries will be located at: ${finalBinLocation}`);
         let cacheKey = cachePrimaryKey(config);
