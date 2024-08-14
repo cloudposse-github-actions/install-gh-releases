@@ -44,7 +44,7 @@ jobs:
               tag: ${{ matrix.version }}
               platform: ${{ matrix.platform }}
               arch: ${{ matrix.arch }}
-              extension-matching: false
+              extension-matching: true
       - run: tfsec --version
 
   assert:
