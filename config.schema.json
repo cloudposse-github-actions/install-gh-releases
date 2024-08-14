@@ -27,6 +27,9 @@
             "extension-matching": {
               "type": "string"
             },
+            "binaries-location": {
+              "type": "string"
+            },
             "rename-to": {
               "type": "string"
             },

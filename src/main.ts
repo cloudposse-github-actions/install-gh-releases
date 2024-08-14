@@ -71,6 +71,7 @@ export async function run() {
                     extension_matching: false,
                     rename_to: "",
                     chmod: "",
+                    binaries_location: ""
                 } as Config)
             } else if (typeof config === 'string') {
                 configs.set(repo, {
@@ -84,6 +85,7 @@ export async function run() {
                     extension_matching: false,
                     rename_to: "",
                     chmod: "",
+                    binaries_location: ""
                 } as Config)
             } else if (typeof config == 'object') {
                 configs.set(repo, {
@@ -97,13 +99,14 @@ export async function run() {
                     extension_matching: config.extension_matching === "enable" || config.extension_matching === "true",
                     rename_to: config.rename_to === undefined ? "" : config.rename_to,
                     chmod: config.chmod === undefined ? "" : config.chmod,
+                    binaries_location: config.binaries_location === undefined ? "" : config.binaries_location,
                 } as Config)
             }
         }
 
         const octokit = getOctokit(token)
         for (let [repo, config] of configs) {
-            await  downloadRelease(octokit, token, config, cacheEnabled, binariesLocation)
+            await  downloadRelease(octokit, token, config, cacheEnabled)
         }
     } catch (error) {
         if (error instanceof Error) {
@@ -140,14 +143,14 @@ function defaultArchList() {
             return [os.arch()]
     }
 }
-async function downloadRelease(octokit, token, config: Config, cache_enabled: boolean, binary_location: string): Promise<boolean> {
+async function downloadRelease(octokit, token, config: Config, cache_enabled: boolean,): Promise<boolean> {
 
     let dest = toolPath(config);
 
     let finalBinLocation = dest;
-    if (binary_location !== "") {
-        core.debug(`==> Given bin location: ${binary_location}`);
-        finalBinLocation = path.join(dest, binary_location);
+    if (config.binaries_location !== "") {
+        core.debug(`==> Given bin location: ${config.binaries_location}`);
+        finalBinLocation = path.join(dest, config.binaries_location);
     }
     core.info(`==> Binaries will be located at: ${finalBinLocation}`);
 
