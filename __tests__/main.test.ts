@@ -154,8 +154,7 @@ wasmerio/wasmer: {}
                     return ''
             }
         })
-
-
+        
         await main.run()
         expect(runMock).toHaveReturned()
 
