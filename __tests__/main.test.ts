@@ -102,53 +102,21 @@ wasmerio/wasmer: {}
         cacheMock.mockImplementation( async (url: string, dest?: string, auth?: string, headers?: OutgoingHttpHeaders) => {
             const tmpdir = os.tmpdir();
             let filepath = ""
-            switch (url) {
-                case 'https://api.github.com/repos/aquasecurity/tfsec/releases/assets/61868894':
-                    filepath = path.join(tmpdir, 'tfsec_1.18.0_linux_amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/tfsec_1.18.0_linux_amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202162':
-                    filepath = path.join(tmpdir, 'connecti-v0.0.4-linux-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/connecti-v0.0.4-linux-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202168':
-                    filepath = path.join(tmpdir, 'connecti-v0.0.4-darwin-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/connecti-v0.0.4-darwin-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210534':
-                    filepath = path.join(tmpdir, 'change-aws-credentials-v0.4.0-linux-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/change-aws-credentials-v0.4.0-linux-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210524':
-                    filepath = path.join(tmpdir, 'change-aws-credentials-v0.4.0-darwin-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/change-aws-credentials-v0.4.0-darwin-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961884':
-                    filepath = path.join(tmpdir, 'wasmer-linux-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/wasmer-linux-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-                case 'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961899':
-                    filepath = path.join(tmpdir, 'wasmer-darwin-amd64.tar.gz');
-                    fs.copyFile("__tests__/fixtures/assets/wasmer-darwin-amd64.tar.gz", filepath,
-                        (err) => { if (err) throw err; }
-                    );
-                    return filepath
-
-                default:
-                    return ''
+            let assets_map = {
+                'https://api.github.com/repos/aquasecurity/tfsec/releases/assets/61868894': 'tfsec_1.18.0_linux_amd64.tar.gz',
+                'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202162': 'connecti-v0.0.4-linux-amd64.tar.gz',
+                'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202168': 'connecti-v0.0.4-darwin-amd64.tar.gz',
+                'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210534': 'change-aws-credentials-v0.4.0-linux-amd64.tar.gz',
+                'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210524': 'change-aws-credentials-v0.4.0-darwin-amd64.tar.gz',
+                'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961884': 'wasmer-linux-amd64.tar.gz',
+                'https://api.github.com/repos/wasmerio/wasmer/releases/assets/179961899': 'wasmer-darwin-amd64.tar.gz'
             }
+            filepath = path.join(tmpdir, assets_map[url]);
+            fs.copyFile("__tests__/fixtures/assets.tar.gz", filepath,
+                (err) => { if (err) throw err; }
+            );
+            return filepath
+
         })
 
         await main.run()
