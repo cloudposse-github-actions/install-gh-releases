@@ -110,6 +110,7 @@ wasmerio/wasmer: {}
                     );
                     return filepath
                 case 'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202168':
+                case 'https://api.github.com/repos/jaxxstorm/connecti/releases/assets/149202162':
                     filepath = path.join(tmpdir, 'connecti-v0.0.4-darwin-amd64.tar.gz');
                     fs.copyFile("__tests__/fixtures/assets/connecti-v0.0.4-darwin-amd64.tar.gz", filepath,
                         (err) => { if (err) throw err; }
@@ -154,7 +155,7 @@ wasmerio/wasmer: {}
                     return ''
             }
         })
-        
+
         await main.run()
         expect(runMock).toHaveReturned()
 
