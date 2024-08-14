@@ -115,7 +115,7 @@ jobs:
         with: # Grab a pure binary
           repo: open-telemetry/opentelemetry-collector
           tag: v0.62.1
-          extension-matching: disable
+          extension-matching: false
           rename-to: ocb
           chmod: 0755
 ```

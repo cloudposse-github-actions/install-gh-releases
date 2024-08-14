@@ -35,13 +35,13 @@ jobs:
       - run: yarn build
       - uses: ./
         with:
-          cache: enable
+          cache: true
           config: |-
             prometheus/prometheus:
               tag: "v2.37.9"
               platform: linux
               arch: amd64
-              extension-matching: enable
+              extension-matching: false
               binaries-location: "prometheus-2.37.9.linux-amd64"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

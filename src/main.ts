@@ -53,7 +53,7 @@ export async function run() {
             )
         }
 
-        const cacheEnabled = (core.getInput("cache") === "enable")
+        const cacheEnabled = (core.getInput("cache") === "true")
 
         let configs : Map<string, Config> = new Map<string, Config>();
         for (let repo in (configJson as object))  {
@@ -142,7 +142,7 @@ function defaultArchList() {
             return [os.arch()]
     }
 }
-async function downloadRelease(octokit, token, config: Config, cache_enabled: boolean,): Promise<boolean> {
+async function downloadRelease(octokit, token, config: Config, cache_enabled: boolean): Promise<boolean> {
 
     let dest = toolPath(config);
 

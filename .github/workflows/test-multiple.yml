@@ -35,7 +35,7 @@ jobs:
             pulumi/crd2pulumi: v1.0.10            
             jaxxstorm/connecti:
               arch: amd64
-          cache: enable
+          cache: true
       - run: change-aws-credentials version
       - run: crd2pulumi version
       - run: connecti version

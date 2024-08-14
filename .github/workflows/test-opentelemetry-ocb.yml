@@ -42,7 +42,7 @@ jobs:
               tag: ${{ matrix.version }}
               platform: ${{ matrix.platform }}
               arch: ${{ matrix.arch }}
-              extension-matching: disable
+              extension-matching: false
               rename-to: ocb
               chmod: 755
         env:

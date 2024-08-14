@@ -34,7 +34,7 @@ jobs:
           config: |
             MystenLabs/sui:          
               platform: ubuntu
-          cache: enable
+          cache: true
       - run: sui --version
 
   assert:
