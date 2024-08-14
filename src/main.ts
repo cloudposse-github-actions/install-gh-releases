@@ -96,7 +96,7 @@ export async function run() {
                     arch_list: config.arch === "" || config.arch === undefined ? defaultArchList() : [config.arch],
                     extension: config.extension === undefined ? "" : config.extension,
                     extension_matching: config["extension-matching"] === "enable" || config["extension-matching"] === "true",
-                    rename_to: config.rename_to === undefined ? "" : config.rename_to,
+                    rename_to: config["rename-to"] === undefined ? "" : config["rename-to"],
                     chmod: config.chmod === undefined ? "" : config.chmod,
                     binaries_location: config["binaries-location"] === undefined ? "" : config["binaries-location"],
                 } as Config)
