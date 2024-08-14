@@ -1,4 +1,4 @@
-name: Test change-aws-credentials
+name: Test config with multiple tools
 on:
   #  # Uncomment when test added first time to register workflow and comment it back after workflow would be registered
   #  #
@@ -37,6 +37,8 @@ jobs:
               arch: amd64
           cache: enable
       - run: change-aws-credentials version
+      - run: crd2pulumi version
+      - run: connecti version
 
   assert:
     runs-on: ubuntu-latest
