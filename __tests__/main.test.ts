@@ -121,6 +121,12 @@ wasmerio/wasmer: {}
                         (err) => { if (err) throw err; }
                     );
                     return filepath
+                case 'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210534':
+                    filepath = path.join(tmpdir, 'change-aws-credentials-v0.4.0-linux-amd64.tar.gz');
+                    fs.copyFile("__tests__/fixtures/assets/change-aws-credentials-v0.4.0-linux-amd64.tar.gz", filepath,
+                        (err) => { if (err) throw err; }
+                    );
+                    return filepath
                 case 'https://api.github.com/repos/jaxxstorm/change-aws-credentials/releases/assets/99210524':
                     filepath = path.join(tmpdir, 'change-aws-credentials-v0.4.0-darwin-amd64.tar.gz');
                     fs.copyFile("__tests__/fixtures/assets/change-aws-credentials-v0.4.0-darwin-amd64.tar.gz", filepath,
