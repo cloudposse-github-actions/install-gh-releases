@@ -53,7 +53,6 @@ export async function run() {
             )
         }
 
-        let binariesLocation = core.getInput("binaries-location");
         const cacheEnabled = (core.getInput("cache") === "enable")
 
         let configs : Map<string, Config> = new Map<string, Config>();
