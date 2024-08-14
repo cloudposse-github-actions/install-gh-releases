@@ -84281,7 +84281,7 @@ function run() {
             if (!isValid) {
                 throw new Error(ajv.errorsText());
             }
-            const cacheEnabled = (core.getInput("cache") === "enable");
+            const cacheEnabled = (core.getInput("cache") === "true");
             let configs = new Map();
             for (let repo in configJson) {
                 let config = configJson[repo];
