@@ -34,7 +34,14 @@
               "type": "string"
             },
             "chmod": {
-              "type": "string"
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
             }
           }
         },
