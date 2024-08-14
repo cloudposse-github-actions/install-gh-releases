@@ -25,7 +25,8 @@
               "type": "string"
             },
             "extension-matching": {
-              "type": "string"
+              "type": "boolean",
+              "default": false
             },
             "binaries-location": {
               "type": "string"

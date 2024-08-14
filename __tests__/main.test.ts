@@ -59,7 +59,7 @@ aquasecurity/tfsec:
   tag: v1.18.0
   platform: linux
   arch: amd64
-  extension-matching: enable
+  extension-matching: true
 jaxxstorm/connecti: 
 jaxxstorm/change-aws-credentials: v0.4.0
 wasmerio/wasmer: {}
@@ -69,23 +69,16 @@ wasmerio/wasmer: {}
             }
         })
 
-        const request_callback = () => new Promise((resolve, reject) => {
-            resolve({status: 302, headers: {location: 'mock-url'}});
-        })
-
         let getReleaseCallback = jest.fn().mockImplementation((inputs) => {
-            switch (inputs.repo) {
-                case 'connecti':
-                    return {data: JSON.parse(fs.readFileSync("__tests__/fixtures/connecti.latest.json", 'utf8'))}
-                case 'wasmer':
-                    return {data: JSON.parse(fs.readFileSync("__tests__/fixtures/wasmer.latest.json", 'utf8'))}
-                case 'change-aws-credentials':
-                    return {data: JSON.parse(fs.readFileSync("__tests__/fixtures/change-aws-credentials.v1.18.0.json", 'utf8'))}
-                case 'tfsec':
-                    return {data: JSON.parse(fs.readFileSync("__tests__/fixtures/tfsec.v1.18.0.json", 'utf8'))}
-                default:
-                    null
+            let releases_map = {
+                'connecti': 'connecti.latest.json',
+                'wasmer': 'wasmer.latest.json',
+                'change-aws-credentials': 'change-aws-credentials.v1.18.0.json',
+                'tfsec': 'tfsec.v1.18.0.json',
             }
+
+            let file_name = releases_map[inputs.repo]
+            return {data: JSON.parse(fs.readFileSync("__tests__/fixtures/" + file_name, 'utf8'))}
         })
 
         octokitMock.mockImplementation(token => {
