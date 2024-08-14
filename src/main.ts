@@ -103,7 +103,7 @@ export async function run() {
 
         const octokit = getOctokit(token)
         for (let [repo, config] of configs) {
-            await  downloadRelease(octokit, config, cacheEnabled, binariesLocation)
+            await  downloadRelease(octokit, token, config, cacheEnabled, binariesLocation)
         }
     } catch (error) {
         if (error instanceof Error) {
@@ -140,7 +140,7 @@ function defaultArchList() {
             return [os.arch()]
     }
 }
-async function downloadRelease(octokit, config: Config, cache_enabled: boolean, binary_location: string): Promise<boolean> {
+async function downloadRelease(octokit, token, config: Config, cache_enabled: boolean, binary_location: string): Promise<boolean> {
 
     let dest = toolPath(config);
 
@@ -211,7 +211,7 @@ async function downloadRelease(octokit, config: Config, cache_enabled: boolean, 
     core.info(`Downloading ${config.project} from ${url}`)
     const binPath = await tc.downloadTool(url,
         undefined,
-        `token ${octokit.token}`,
+        `token ${token}`,
         {
             accept: 'application/octet-stream'
         }
