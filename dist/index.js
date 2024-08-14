@@ -84327,7 +84327,7 @@ function run() {
                         extension_matching: config["extension-matching"] === "enable" || config["extension-matching"] === "true",
                         rename_to: config.rename_to === undefined ? "" : config.rename_to,
                         chmod: config.chmod === undefined ? "" : config.chmod,
-                        binaries_location: config.binaries_location === undefined ? "" : config.binaries_location,
+                        binaries_location: config["binaries-location"] === undefined ? "" : config["binaries-location"],
                     });
                 }
             }
