@@ -103,9 +103,9 @@ wasmerio/wasmer: {}
             const tmpdir = os.tmpdir();
             let filepath = ""
             switch (url) {
-                case 'https://api.github.com/repos/aquasecurity/tfsec/releases/assets/61869003':
-                    filepath = path.join(tmpdir, 'tfsec-checkgen-linux-amd64');
-                    fs.copyFile("__tests__/fixtures/assets/tfsec-checkgen-linux-amd64", filepath,
+                case 'https://api.github.com/repos/aquasecurity/tfsec/releases/assets/61868894':
+                    filepath = path.join(tmpdir, 'tfsec_1.18.0_linux_amd64.tar.gz');
+                    fs.copyFile("__tests__/fixtures/assets/tfsec_1.18.0_linux_amd64.tar.gz", filepath,
                         (err) => { if (err) throw err; }
                     );
                     return filepath
