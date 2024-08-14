@@ -84281,7 +84281,6 @@ function run() {
             if (!isValid) {
                 throw new Error(ajv.errorsText());
             }
-            let binariesLocation = core.getInput("binaries-location");
             const cacheEnabled = (core.getInput("cache") === "enable");
             let configs = new Map();
             for (let repo in configJson) {
