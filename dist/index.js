@@ -84331,7 +84331,7 @@ function run() {
             }
             const octokit = (0, github_1.getOctokit)(token);
             for (let [repo, config] of configs) {
-                yield downloadRelease(octokit, config, cacheEnabled, binariesLocation);
+                yield downloadRelease(octokit, token, config, cacheEnabled, binariesLocation);
             }
         }
         catch (error) {
@@ -84368,7 +84368,7 @@ function defaultArchList() {
             return [os.arch()];
     }
 }
-function downloadRelease(octokit, config, cache_enabled, binary_location) {
+function downloadRelease(octokit, token, config, cache_enabled, binary_location) {
     return __awaiter(this, void 0, void 0, function* () {
         let dest = toolPath(config);
         let finalBinLocation = dest;
@@ -84430,7 +84430,7 @@ function downloadRelease(octokit, config, cache_enabled, binary_location) {
         }
         const url = asset.url;
         core.info(`Downloading ${config.project} from ${url}`);
-        const binPath = yield tc.downloadTool(url, undefined, `token ${octokit.token}`, {
+        const binPath = yield tc.downloadTool(url, undefined, `token ${token}`, {
             accept: 'application/octet-stream'
         });
         const extractFn = getExtractFn(asset.name);
