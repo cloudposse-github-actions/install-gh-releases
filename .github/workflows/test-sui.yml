@@ -32,7 +32,7 @@ jobs:
       - uses: ./
         with:
           config: |
-            MystenLabs/sui:          
+            MystenLabs/sui:
               platform: ubuntu
           cache: true
       - run: sui --version

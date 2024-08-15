@@ -43,6 +43,7 @@ jobs:
               platform: ${{ matrix.platform }}
               arch: ${{ matrix.arch }}
               extension: "\\.bz2"
+              extension-matching: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: grcov --version

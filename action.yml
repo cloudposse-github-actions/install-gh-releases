@@ -6,15 +6,13 @@ inputs:
     description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
     default: ${{ github.token }}
   config:
-    description: "Configuration for the action"
+    description: "Releases configuration to install (YAML format)"
     required: true
   cache:
-    description: "When set to 'enable', caches the downloads of known tags with actions/cache"
+    description: "When set to 'true', caches the releases of known tags with actions/cache"
+    default: "false"
     required: false
 
-#  repo:
-#    description: "GitHub repo where binary is located"
-#    required: true
 #  tag:
 #    description: "tag containing binary to install"
 #    default: latest
