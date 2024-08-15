@@ -61,13 +61,13 @@ introduction: |-
   
   | Name | Description | Default |
   |------|-------------|---------|
-  | tag | Tag containing binary to install | latest |
-  | platform | OS Platform to match in release package | {platform of current runner} |
-  | arch | OS Architecture to match in release package | {arch of current runner} |
-  | extension-matching | Set `true` to match extension in release package | false |
-  | extension | Extension match pattern | `tar.gz|zip|tgz` |
-  | rename-to | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is renamed. | null |
-  | chmod | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is chmod'd. | null |
+  | tag | Tag containing binary to install | `latest` |
+  | platform | OS Platform to match in release package | `{platform of current runner}` |
+  | arch | OS Architecture to match in release package | `{arch of current runner}` |
+  | extension-matching | Set `true` to match extension in release package | `false` |
+  | extension | Extension match pattern | `tar.gz\|zip\|tgz` |
+  | rename-to | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is renamed. | `null` |
+  | chmod | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is chmod'd. | `null` |
   
 
 references: []
