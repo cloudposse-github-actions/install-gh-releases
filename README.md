@@ -60,6 +60,43 @@ This project is part of our comprehensive ["SweetOps"](https://cpco.io/sweetops)
 Fork of [jaxxstorm/action-install-gh-release](https://github.com/jaxxstorm/action-install-gh-release) 
 modified to install multiple releases at once and adopted to Cloud Posse's GitHub Actions standards.
 
+Define set of GH releases to install as `config` input following the format:
+
+* Short format: 
+  ```yaml
+    acme/repo-1: latest
+  ```
+
+  or 
+
+  ```yaml
+    acme/repo-1:
+  ``` 
+ 
+  which are equivalent
+* Long format:  
+
+  ```yaml
+  acme/repo-4:
+    tag: v0.1.0
+    platform: linux
+    arch: amd64
+    ## Seek for `(tar.gz|zip|tgz)` archived asset (default "extension")
+    extension-matching: true
+  ```
+
+Long format supports the following parameters:
+
+| Name | Description | Default |
+|------|-------------|---------|
+| tag | Tag containing binary to install | latest |
+| platform | OS Platform to match in release package | {platform of current runner} |
+| arch | OS Architecture to match in release package | {arch of current runner} |
+| extension-matching | Set `true` to match extension in release package | false |
+| extension | Extension match pattern | `tar.gz|zip|tgz` |
+| rename-to | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is renamed. | null |
+| chmod | When installing a release that is not an archive, e.g. a pure binary, this controls how the downloaded release asset is chmod'd. | null |
+
 
 
 
@@ -91,6 +128,7 @@ modified to install multiple releases at once and adopted to Cloud Posse's GitHu
                 platform: linux
                 arch: amd64
                 extension: "\\.bz2"
+                extension-matching: true
               open-telemetry/opentelemetry-collector:
                 tag: v0.62.1
                 platform: linux
@@ -122,7 +160,7 @@ modified to install multiple releases at once and adopted to Cloud Posse's GitHu
 
 | Name | Description | Default | Required |
 |------|-------------|---------|----------|
-| cache | When set to 'true', caches the releases of known tags with actions/cache | N/A | false |
+| cache | When set to 'true', caches the releases of known tags with actions/cache | false | false |
 | config | Releases configuration to install (YAML format) | N/A | true |
 | token | GITHUB\_TOKEN or a `repo` scoped Personal Access Token (PAT) | ${{ github.token }} | false |
 
