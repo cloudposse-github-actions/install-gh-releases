@@ -84272,7 +84272,7 @@ function run() {
             const token = process.env['GITHUB_TOKEN'] || core.getInput("token");
             const config = core.getInput("config");
             const ajv = new _2020_1.default();
-            const schemaJsonFile = 'config.schema.json';
+            const schemaJsonFile = path.join(process.env['GITHUB_ACTION_PATH'] || "", 'config.schema.json');
             const configJson = yaml.load(config);
             // load schema json file
             const schemaJson = JSON.parse(fs.readFileSync(schemaJsonFile, 'utf8'));
