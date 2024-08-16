@@ -7,6 +7,7 @@ import * as core from "@actions/core";
 import Ajv2020 from "ajv/dist/2020"
 import * as yaml from 'js-yaml';
 import * as tc from "@actions/tool-cache";
+import {schema} from './schema'
 
 interface ToolInfo {
     owner: string;
@@ -41,13 +42,10 @@ export async function run() {
 
         const ajv = new Ajv2020()
 
-        const schemaJsonFile = path.join(process.env['GITHUB_ACTION_PATH'] || "", 'config.schema.json')
         const configJson = yaml.load(config);
 
-        // load schema json file
-        const schemaJson = JSON.parse(fs.readFileSync(schemaJsonFile, 'utf8'));
         // validate input json against schema json
-        const isValid = ajv.validate(schemaJson, configJson);
+        const isValid = ajv.validate(schema, configJson);
         if (! isValid) {
             throw new Error(
                 ajv.errorsText()
