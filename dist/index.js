@@ -84265,6 +84265,7 @@ const core = __importStar(__nccwpck_require__(2186));
 const _2020_1 = __importDefault(__nccwpck_require__(6121));
 const yaml = __importStar(__nccwpck_require__(1917));
 const tc = __importStar(__nccwpck_require__(7784));
+const schema_1 = __nccwpck_require__(2199);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -84272,12 +84273,9 @@ function run() {
             const token = process.env['GITHUB_TOKEN'] || core.getInput("token");
             const config = core.getInput("config");
             const ajv = new _2020_1.default();
-            const schemaJsonFile = path.join(process.env['GITHUB_ACTION_PATH'] || "", 'config.schema.json');
             const configJson = yaml.load(config);
-            // load schema json file
-            const schemaJson = JSON.parse(fs.readFileSync(schemaJsonFile, 'utf8'));
             // validate input json against schema json
-            const isValid = ajv.validate(schemaJson, configJson);
+            const isValid = ajv.validate(schema_1.schema, configJson);
             if (!isValid) {
                 throw new Error(ajv.errorsText());
             }
@@ -84585,6 +84583,76 @@ function cachePrimaryKey(info) {
     return "action-install-gh-release/" +
         `${info.owner}/${info.project}/${info.tag}/${info.platform}-${info.arch}`;
 }
+
+
+/***/ }),
+
+/***/ 2199:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.schema = void 0;
+exports.schema = {
+    "type": "object",
+    "additionalProperties": false,
+    "unevaluatedProperties": false,
+    "patternProperties": {
+        "^(.*)/(.*)$": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "skip": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "tag": {
+                            "type": "string"
+                        },
+                        "platform": {
+                            "type": "string"
+                        },
+                        "arch": {
+                            "type": "string"
+                        },
+                        "extension": {
+                            "type": "string"
+                        },
+                        "extension-matching": {
+                            "type": "boolean",
+                            "default": false
+                        },
+                        "binaries-location": {
+                            "type": "string"
+                        },
+                        "rename-to": {
+                            "type": "string"
+                        },
+                        "chmod": {
+                            "oneOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        }
+    }
+};
 
 
 /***/ }),
