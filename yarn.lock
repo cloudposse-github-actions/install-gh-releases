@@ -2,12 +2,12 @@
 # yarn lockfile v1
 
 
-"@actions/cache@^3.2.4":
-  version "3.2.4"
-  resolved "https://registry.npmjs.org/@actions/cache/-/cache-3.2.4.tgz"
-  integrity sha512-RuHnwfcDagtX+37s0ZWy7clbOfnZ7AlDJQ7k/9rzt2W4Gnwde3fa/qjSjVuz4vLcLIpc7fUob27CMrqiWZytYA==
+"@actions/cache@^4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@actions/cache/-/cache-4.0.3.tgz#7b08ede6ae2c0b2fb0b7b452ed0f40ba9f0c53d3"
+  integrity sha512-SvrqFtYJ7I48A/uXNkoJrnukx5weQv1fGquhs3+4nkByZThBH109KTIqj5x/cGV7JGNvb8dLPVywUOqX1fjiXg==
   dependencies:
-    "@actions/core" "^1.10.0"
+    "@actions/core" "^1.11.1"
     "@actions/exec" "^1.0.1"
     "@actions/glob" "^0.1.0"
     "@actions/http-client" "^2.1.1"
@@ -15,8 +15,8 @@
     "@azure/abort-controller" "^1.1.0"
     "@azure/ms-rest-js" "^2.6.0"
     "@azure/storage-blob" "^12.13.0"
+    "@protobuf-ts/plugin" "^2.9.4"
     semver "^6.3.1"
-    uuid "^3.3.3"
 
 "@actions/core@^1.10.0", "@actions/core@^1.2.6":
   version "1.10.1"
@@ -25,6 +25,14 @@
   dependencies:
     "@actions/http-client" "^2.0.1"
     uuid "^8.3.2"
+
+"@actions/core@^1.11.1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@actions/core/-/core-1.11.1.tgz#ae683aac5112438021588030efb53b1adb86f172"
+  integrity sha512-hXJCSrkwfA46Vd9Z3q4cpEpHB1rL5NG04+/rbqW9d3+CSvtB1tYe8UTpAlixa1vj0m/ULglfEK2UKxMGxCxv5A==
+  dependencies:
+    "@actions/exec" "^1.1.1"
+    "@actions/http-client" "^2.0.1"
 
 "@actions/exec@^1.0.0", "@actions/exec@^1.0.1", "@actions/exec@^1.1.1":
   version "1.1.1"
@@ -954,6 +962,42 @@
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
   integrity sha512-cq8o4cWH0ibXh9VGi5P20Tu9XF/0fFXl9EUinr9QfTM7a7p0oTA4iJRCQWppXR1Pg8dSM0UCItCkPwsk9qWWYA==
+
+"@protobuf-ts/plugin-framework@^2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@protobuf-ts/plugin-framework/-/plugin-framework-2.9.6.tgz#33428f4704b849a6177bf6aead6651c65f1362aa"
+  integrity sha512-w7A1RXrDCiVzcaRE6YJP7FCARuAFe/Vc4SNQnHAi4CF0V6mEtyjAYEIC5BNYgIRaJEqB26zzsBQjIem3R02SCA==
+  dependencies:
+    "@protobuf-ts/runtime" "^2.9.6"
+    typescript "^3.9"
+
+"@protobuf-ts/plugin@^2.9.4":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@protobuf-ts/plugin/-/plugin-2.9.6.tgz#289c8c22957960a80c4b4991172434d51a82e3b4"
+  integrity sha512-Wpv5rkXeu6E5Y4r0TjWE0bzRGddiTYl/RM+tLgVlS0r8CqOBqNAmlWv+s8ltf/F75rVrahUal0cpyhFwha9GRA==
+  dependencies:
+    "@protobuf-ts/plugin-framework" "^2.9.6"
+    "@protobuf-ts/protoc" "^2.9.6"
+    "@protobuf-ts/runtime" "^2.9.6"
+    "@protobuf-ts/runtime-rpc" "^2.9.6"
+    typescript "^3.9"
+
+"@protobuf-ts/protoc@^2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@protobuf-ts/protoc/-/protoc-2.9.6.tgz#b3d5347ff0684aae73c432a29c09c60344b06af1"
+  integrity sha512-c0XvAPDIBAovH9HxV8gBv8gzOTreQIqibcusrB1+DxvFiSvy+2V1tjbUmG5gJEbjk3aAOaoj0a3+QuE+P28xUw==
+
+"@protobuf-ts/runtime-rpc@^2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@protobuf-ts/runtime-rpc/-/runtime-rpc-2.9.6.tgz#b5c11a01f3105ef5df0284fda915168c1c39d8ef"
+  integrity sha512-0UeqDRzNxgsh08lY5eWzFJNfD3gZ8Xf+WG1HzbIAbVAigzigwjwsYNNhTeas5H3gco1U5owTzCg177aambKOOw==
+  dependencies:
+    "@protobuf-ts/runtime" "^2.9.6"
+
+"@protobuf-ts/runtime@^2.9.6":
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/@protobuf-ts/runtime/-/runtime-2.9.6.tgz#a687ce90d76e053b3b8a3b1abbe99264d2d6bda2"
+  integrity sha512-C0CfpKx4n4LBbUrajOdRj2BTbd3qBoK0SiKWLq7RgCoU6xiN4wesBMFHUOBp3fFzKeZwgU8Q2KtzaqzIvPLRXg==
 
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
@@ -4695,6 +4739,11 @@ typed-array-length@^1.0.6:
     is-typed-array "^1.1.13"
     possible-typed-array-names "^1.0.0"
 
+typescript@^3.9:
+  version "3.9.10"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.10.tgz#70f3910ac7a51ed6bef79da7800690b19bf778b8"
+  integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
+
 typescript@^5.2.2, typescript@^5.5.4:
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.4.tgz#d9852d6c82bad2d2eda4fd74a5762a8f5909e9ba"
@@ -4742,7 +4791,7 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
-uuid@^3.3.2, uuid@^3.3.3:
+uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
