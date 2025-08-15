@@ -37,7 +37,7 @@ jobs:
       - run: yarn build
       - if: ${{ matrix.runs-on == 'ubuntu-latest' }}
         run: |-
-          apt-get install libgoogle-perftools-dev --yes 
+          sudo apt-get install libgoogle-perftools-dev --yes 
       - uses: ./
         with:
           config: |
