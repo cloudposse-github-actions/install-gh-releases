@@ -53642,6 +53642,7 @@ exports["default"] = def;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const code_1 = __nccwpck_require__(64205);
+const util_1 = __nccwpck_require__(3439);
 const codegen_1 = __nccwpck_require__(19179);
 const error = {
     message: ({ schemaCode }) => (0, codegen_1.str) `must match pattern "${schemaCode}"`,
@@ -53654,11 +53655,19 @@ const def = {
     $data: true,
     error,
     code(cxt) {
-        const { data, $data, schema, schemaCode, it } = cxt;
-        // TODO regexp should be wrapped in try/catchs
+        const { gen, data, $data, schema, schemaCode, it } = cxt;
         const u = it.opts.unicodeRegExp ? "u" : "";
-        const regExp = $data ? (0, codegen_1._) `(new RegExp(${schemaCode}, ${u}))` : (0, code_1.usePattern)(cxt, schema);
-        cxt.fail$data((0, codegen_1._) `!${regExp}.test(${data})`);
+        if ($data) {
+            const { regExp } = it.opts.code;
+            const regExpCode = regExp.code === "new RegExp" ? (0, codegen_1._) `new RegExp` : (0, util_1.useFunc)(gen, regExp);
+            const valid = gen.let("valid");
+            gen.try(() => gen.assign(valid, (0, codegen_1._) `${regExpCode}(${schemaCode}, ${u}).test(${data})`), () => gen.assign(valid, false));
+            cxt.fail$data((0, codegen_1._) `!${valid}`);
+        }
+        else {
+            const regExp = (0, code_1.usePattern)(cxt, schema);
+            cxt.fail$data((0, codegen_1._) `!${regExp}.test(${data})`);
+        }
     },
 };
 exports["default"] = def;
@@ -61188,6 +61197,22 @@ function charFromCodepoint(c) {
   );
 }
 
+// set a property of a literal object, while protecting against prototype pollution,
+// see https://github.com/nodeca/js-yaml/issues/164 for more details
+function setProperty(object, key, value) {
+  // used for this specific key only because Object.defineProperty is slow
+  if (key === '__proto__') {
+    Object.defineProperty(object, key, {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: value
+    });
+  } else {
+    object[key] = value;
+  }
+}
+
 var simpleEscapeCheck = new Array(256); // integer, for fast access
 var simpleEscapeMap = new Array(256);
 for (var i = 0; i < 256; i++) {
@@ -61366,7 +61391,7 @@ function mergeMappings(state, destination, source, overridableKeys) {
     key = sourceKeys[index];
 
     if (!_hasOwnProperty.call(destination, key)) {
-      destination[key] = source[key];
+      setProperty(destination, key, source[key]);
       overridableKeys[key] = true;
     }
   }
@@ -61426,17 +61451,7 @@ function storeMappingPair(state, _result, overridableKeys, keyTag, keyNode, valu
       throwError(state, 'duplicated mapping key');
     }
 
-    // used for this specific key only because Object.defineProperty is slow
-    if (keyNode === '__proto__') {
-      Object.defineProperty(_result, keyNode, {
-        configurable: true,
-        enumerable: true,
-        writable: true,
-        value: valueNode
-      });
-    } else {
-      _result[keyNode] = valueNode;
-    }
+    setProperty(_result, keyNode, valueNode);
     delete overridableKeys[keyNode];
   }
 
